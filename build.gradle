@@ -1,0 +1,55 @@
+buildscript {
+    repositories {
+        jcenter()
+        maven {
+            name = "forge"
+            url = "http://files.minecraftforge.net/maven"
+        }
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
+    }
+}
+plugins {
+    id 'java'
+    id 'com.github.johnrengelman.shadow' version '2.0.4'
+}
+
+apply plugin: 'net.minecraftforge.gradle.forge'
+group = 'com.github.elrol.elrolianbackpacks'
+version = 'Alpha v0.1'
+archivesBaseName = 'ElrolianBackpacks'
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+repositories {
+    mavenCentral()
+    maven {
+        name = 'sponge'
+        url = 'http://repo.spongepowered.org/maven'
+    }
+}
+
+shadowJar {
+    from sourceSets.api.output
+    from sourceSets.main.output
+
+    exclude 'dummyThing'
+
+    exclude 'META-INF'
+    relocate('com.typesafe.config', 'configurate.typesafe.config')
+}
+
+reobf {
+    shadowJar {}
+}
+
+minecraft {
+    version = "1.12.2-14.23.5.2814"
+    runDir = "run"
+    mappings = "snapshot_20171003"
+}
+
+dependencies {
+    compileOnly 'org.spongepowered:spongeapi:7.1.0'
+    compile 'xyz.morphia.morphia:core:1.4.0'
+}
