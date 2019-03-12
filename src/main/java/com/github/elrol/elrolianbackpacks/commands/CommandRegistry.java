@@ -17,7 +17,7 @@ public class CommandRegistry {
 				.executor(new BackpackExecutor())
 				.build();
 		
-		Sponge.getCommandManager().register(elrolianBackpacks, backpack, "backpack", "bp", "backpacks");
+		Sponge.getCommandManager().register(elrolianBackpacks, backpack, "testpack", "testbp", "testbackpack");
 		
 	}
 

@@ -18,6 +18,7 @@ import com.github.elrol.elrolianbackpacks.config.DefaultConfiguration;
 import com.github.elrol.elrolianbackpacks.libs.PluginInfo;
 import com.google.inject.Inject;
 import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
 
 import ninja.leaping.configurate.commented.CommentedConfigurationNode;
 import ninja.leaping.configurate.hocon.HoconConfigurationLoader;
@@ -62,13 +63,10 @@ public class ElrolianBackpacks {
 	public void init(GameInitializationEvent event){
 		logger.info("Registering Configs");
 		DefaultConfiguration.getInstance().setup(defaultConfig, configManager);
-		
 		final Morphia morphia = new Morphia();
 		morphia.mapPackage("com.github.elrol.elrolianbackpacks");
-
-		datastore = morphia.createDatastore(new MongoClient("localhost", 27017), "elrolian_backpacks");
+		datastore = morphia.createDatastore(new MongoClient(new MongoClientURI(DefaultConfiguration.getInstance().getUrl())), DefaultConfiguration.getInstance().getName());
 		datastore.ensureIndexes();
-		
 		CommandRegistry.setup(this);
 	}
 	
@@ -86,6 +84,9 @@ public class ElrolianBackpacks {
 	}
 	
 	public Datastore getDatastore() {
+		if(datastore == null) {
+			System.out.println("Datastore was null!");
+		}
 		return datastore;
 	}
 }

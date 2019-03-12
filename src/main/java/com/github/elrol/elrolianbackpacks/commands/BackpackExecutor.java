@@ -1,6 +1,5 @@
 package com.github.elrol.elrolianbackpacks.commands;
 
-import org.spongepowered.api.command.CommandException;
 import org.spongepowered.api.command.CommandResult;
 import org.spongepowered.api.command.CommandSource;
 import org.spongepowered.api.command.args.CommandContext;
@@ -13,14 +12,15 @@ import com.github.elrol.elrolianbackpacks.libs.TextLibs;
 public class BackpackExecutor implements CommandExecutor {
 
 	@Override
-	public CommandResult execute(CommandSource src, CommandContext args) throws CommandException {
+	public CommandResult execute(CommandSource src, CommandContext args) {
 		int bag = args.<Integer>getOne("bag").get();
 		if(!(src instanceof Player)) {
 			TextLibs.sendError(src, "You must be a player to run this command");
 			return CommandResult.empty();
 		}
 		Player player = (Player)src;
-		if(!player.hasPermission(DefaultConfiguration.getInstance().getNodeForBag(bag))) {
+		if(!(player.hasPermission(DefaultConfiguration.getInstance().getNodeForBag(bag)) 
+				|| player.hasPermission(DefaultConfiguration.getInstance().getNodeForBag(-1)))) {
 			TextLibs.sendError(src, "You do not have permission to use this bag");
 			return CommandResult.empty();
 		}

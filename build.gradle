@@ -44,7 +44,7 @@ reobf {
 }
 
 minecraft {
-    version = "1.12.2-14.23.5.2814"
+    version = "1.12.2-14.23.5.2768"
     runDir = "run"
     mappings = "snapshot_20171003"
 }
@@ -52,4 +52,5 @@ minecraft {
 dependencies {
     compileOnly 'org.spongepowered:spongeapi:7.1.0'
     compile 'xyz.morphia.morphia:core:1.4.0'
+    compile 'ninja.leaping.configurate:configurate-gson:3.3'
 }
